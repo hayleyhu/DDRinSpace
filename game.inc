@@ -39,6 +39,11 @@ CheckIntersect PROTO oneX:DWORD, oneY:DWORD, oneBitmap:PTR EECS205BITMAP, twoX:D
 PressSparks PROTO
 Update PROTO
 DrawBackground PROTO
+Passthrough PROTO pos:DWORD
+normalState PROTO
+pausedState PROTO
+deadState PROTO
+finishState PROTO
 
 ;; STRUCT
 _GAME STRUCT
@@ -58,6 +63,7 @@ _Arrow STRUCT
  x  DWORD ?
  y  DWORD ?
  bm DWORD ?
+ caught DWORD 0
 _Arrow ENDS
 
 Arrow TYPEDEF _Arrow

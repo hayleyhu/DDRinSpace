@@ -19,25 +19,27 @@ include stars.inc
 
 .CODE
 
-DrawStarField proc
+DrawStarField proc USES eax ebx ecx edx edi time:DWORD
 
 	;; Place your code here
-	INVOKE DrawStar,1,1
-	INVOKE DrawStar,41,31
-	INVOKE DrawStar,81,61
-	INVOKE DrawStar,121,91
-	INVOKE DrawStar,161,121
-	INVOKE DrawStar,201,151
-	INVOKE DrawStar,241,181
-	INVOKE DrawStar,281,211
-	INVOKE DrawStar,321,241
-	INVOKE DrawStar,361,271
-	INVOKE DrawStar,401,301
-	INVOKE DrawStar,441,331
-	INVOKE DrawStar,481,361
-	INVOKE DrawStar,521,391
-	INVOKE DrawStar,561,421
-	INVOKE DrawStar,601,451
+	;; for i from 0 to 15:
+	;;   invoke DrawStar, (i*40+1), (i*30+time)%480
+	mov ebx, 1
+	mov eax, time
+	mov ecx, 0
+	jmp eval
+body:
+	invoke DrawStar, ebx, eax
+	add ebx, 40
+	add eax, 30
+	xor edx, edx
+	mov edi, 480
+	idiv edi
+	mov eax, edx
+	inc ecx
+eval:
+	cmp ecx, 15
+	jng body
 	
 
 	ret  			; Careful! Don't remove this line

@@ -1,4 +1,4 @@
-RightRed EECS205BITMAP <62, 62, 255,, offset RightRed + sizeof RightRed>
+RightRed EECS205BITMAP <62, 62, 0,, offset RightRed + sizeof RightRed>
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h

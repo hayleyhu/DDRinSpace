@@ -17,7 +17,7 @@ include blit.inc
 include game.inc
 include keys.inc
 
-
+ 
 ;; PlaySound
 include winmm.inc
 include windows.inc
@@ -43,108 +43,287 @@ include LeftRed.asm
 include DownRed.asm
 include UpRed.asm
 include RightRed.asm
+include Marvelous.asm
+include Barframe.asm
+include Healthbar.asm
+include Good.asm
+include Boo.asm
 
-StepChart Arrow <16, 260, 450,offset RightRed>, <27, 50, 450,offset LeftRed> 
-ArrowOnScreen Arrow 10 DUP(<>)
+StepChart Arrow <265, 260, 450,offset RightRed>, <275, 260, 450,offset RightRed>, <285, 260, 450, offset RightRed>
+		Arrow <295, 260, 450, offset RightRed>, <305, 260, 450, offset RightRed>, <315, 260, 450, offset RightRed> 
+		Arrow <330, 120, 450, offset DownRed>, <340, 260, 450, offset RightRed>, <350, 50, 450, offset LeftRed>
+		Arrow <360, 190, 450, offset UpRed>, <360, 120, 450, offset DownRed>, <370, 50, 450, offset LeftRed>	
+		Arrow <380, 260, 450, offset RightRed>, <390, 190, 450, offset UpRed>, <400, 120, 450, offset DownRed>, <410, 50, 450, offset LeftRed>
+		;;; 2ND column
+		Arrow <420, 120, 450, offset DownRed>, <430, 260, 450, offset RightRed>, <440, 120, 450, offset DownRed>,<450, 50, 450, offset LeftRed> 
+		Arrow <460, 190, 450, offset UpRed>,<470, 260, 450, offset RightRed>,<480, 260, 450, offset RightRed>,<485, 120, 450, offset DownRed>, <490, 50, 450, offset LeftRed>
+		Arrow <500, 260, 450, offset RightRed>, <510, 50, 450, offset LeftRed>, <520, 190, 450, offset UpRed>, <520, 120, 450, offset DownRed>, <530, 50, 450, offset LeftRed>
+		Arrow <540, 260, 450, offset RightRed>, <550, 190, 450, offset UpRed>, <560, 120, 450, offset DownRed>, <570, 50, 450, offset LeftRed>
+		Arrow <580, 190, 450, offset UpRed>, <585, 50, 450, offset LeftRed>, <590, 120, 450, offset DownRed>,  <600, 190, 450, offset UpRed>, <610, 260, 450, offset RightRed>, <610, 120, 450, offset DownRed>
+		Arrow <620, 190, 450, offset UpRed>, <620, 50, 450, offset LeftRed>, <630, 120, 450, offset DownRed>, <640, 120, 450, offset DownRed>, <650, 120, 450, offset DownRed>
+		Arrow <660, 120, 450, offset DownRed>,<670, 260, 450, offset RightRed>,<680, 190, 450, offset UpRed>, <690, 120, 450, offset DownRed>
+		Arrow <700, 50, 450, offset LeftRed>,<710, 190, 450, offset UpRed> , <720, 120, 450, offset DownRed>,<730, 50, 450, offset LeftRed>, <730, 260, 450, offset RightRed>
+
+		Arrow <740, 190, 450, offset UpRed>,<750, 260, 450, offset RightRed> ,<760, 190, 450, offset UpRed>,<770, 260, 450, offset RightRed>
+		Arrow <780, 190, 450, offset UpRed>,<790, 50, 450, offset LeftRed>,<800, 120, 450, offset DownRed>,<810, 50, 450, offset LeftRed>,<810, 260, 450, offset RightRed>
+		Arrow <820, 190, 450, offset UpRed>,<825, 50, 450, offset LeftRed>,<830, 120, 450, offset DownRed>, <840, 190, 450, offset UpRed>,<850, 120, 450, offset DownRed>
+		Arrow <860, 190, 450, offset UpRed>,<865, 260, 450, offset RightRed> ,<870, 120, 450, offset DownRed>, <880, 190, 450, offset UpRed>,<890, 120, 450, offset DownRed>
+		Arrow <900, 190, 450, offset UpRed>,<905, 50, 450, offset LeftRed>,<910, 120, 450, offset DownRed>,<920, 260, 450, offset RightRed> ,<930, 120, 450, offset DownRed>
+		Arrow <940, 190, 450, offset UpRed>, <945, 260, 450, offset RightRed>,<950, 120, 450, offset DownRed> ,<960, 50, 450, offset LeftRed>,<970, 120, 450, offset DownRed>
+		Arrow <980, 260, 450, offset RightRed>,<990, 190, 450, offset UpRed>,<1000, 120, 450, offset DownRed> ,<1010, 190, 450, offset UpRed>
+		Arrow <1020, 260, 450, offset RightRed>,<1030, 50, 450, offset LeftRed>,<1040, 120, 450, offset DownRed>,<1050, 260, 450, offset RightRed>
+		Arrow <1060, 50, 450, offset LeftRed>, <1070, 120, 450, offset DownRed>,<1080, 190, 450, offset UpRed>,<1090, 120, 450, offset DownRed>
+		Arrow <1100, 190, 450, offset UpRed>, <1110, 260, 450, offset RightRed>,<1120, 120, 450, offset DownRed>,<1130, 260, 450, offset RightRed>
+		Arrow <1140, 190, 450, offset UpRed>,<1150, 50, 450, offset LeftRed>,<1160, 120, 450, offset DownRed>,<1170, 50, 450, offset LeftRed>
+
+	
+
+
+StepChartEnd Arrow <200, 200, 450, offset LeftRed>
 
 SndPath BYTE "rsc/ddr_music.wav", 0
 TitleString BYTE "Dance Dance Revolution in Space", 0
-ScoreFormatStr BYTE "Score: ", 0
-ScoreStr BYTE 256 DUP(0)
-score DWORD ?
+DeadString BYTE "You Lost!",0
+PauseString BYTE "Release ENTER to continue",0
+NormalString BYTE "Press and hold ENTER to pause",0
+FinishString BYTE "You Won! Your score is: %d",0
+outStr BYTE 256 DUP(0)
+
+score DWORD 441
 time DWORD ?
-currIdx DWORD ?
-; nextGoTime DWORD ?
+iterator DWORD ?
+nextIdx DWORD 0
+PauseFlag DWORD 0
 
 .CODE	
-;; Note: You will need to implement CheckIntersect!!!
 
 GameInit PROC
 
 	mov time, 0
-	mov currIdx, 0
+	; mov iterator, 0
 	; invoke BasicBlit, offset background, 320, 240
 	invoke DrawStr, offset TitleString, 330, 40, 0ffh
-	invoke DrawStr, offset ScoreFormatStr, 400, 20, 0ffh
-	; invoke DrawStarField
-	invoke RotateBlit, offset DownArrowBlank, 50, 60, PI_HALF		;left
-	invoke BasicBlit, offset DownArrowBlank, 120, 60				;down 
-	invoke RotateBlit, offset DownArrowBlank, 190, 60, PI_HALF*2 	;up
-	invoke RotateBlit, offset DownArrowBlank, 260, 60, PI_HALF*3 	;right
-	invoke PlaySound, offset SndPath, 0, SND_FILENAME OR SND_ASYNC
-	xor eax, eax
-	mov score, eax
+	invoke PlaySound, offset SndPath, 0, SND_FILENAME OR SND_ASYNC			;Advanced Feature: Music
+
+EXIT:
 	ret         ;; Do not delete this line!!!
 GameInit ENDP
 
 
-GamePlay PROC USES eax ebx ecx edx esi edi
+GamePlay PROC USES eax ecx esi edi
 	
-	mov eax, currIdx
-	mov edx, sizeof Arrow
-	mul edx
-	mov ebx, (Arrow PTR [StepChart + eax]).count
+;DrawBackground
+	cld
+	xor eax, eax
+	mov edi, ScreenBitsPtr
+	mov ecx, 640*480
+	rep stosb
+	invoke DrawStr, offset TitleString, 330, 40, 0ffh
+	cmp score, 541
+	jg DEAD
+	cmp PauseFlag, 1
+	jne NOPAUSE
+	invoke pausedState
+	jmp EXIT
 
-	cmp time, ebx
-	jl notDraw
+NOPAUSE:
+	cmp time, 1400
+	jg FINISHED
+
+	cmp KeyPress, VK_RETURN 
+	jne Continue
+	mov PauseFlag, 1
+Continue:
+	invoke DrawStarField, time              						;Advanced Feature: Scrolling background
+	invoke DrawStr, offset NormalString, 330, 80, 0ffh
+	invoke RotateBlit, offset DownArrowBlank, 50, 60, PI_HALF		;left
+	invoke BasicBlit, offset DownArrowBlank, 120, 60				;down 
+	invoke RotateBlit, offset DownArrowBlank, 190, 60, PI_HALF*2 	;up
+	invoke RotateBlit, offset DownArrowBlank, 260, 60, PI_HALF*3 	;right
+	invoke BasicBlit, offset Healthbar, 600, score
+	invoke BasicBlit, offset Barframe, 600, 341
+
+;Loop over all arrows
+	mov eax, nextIdx
+	mov iterator, eax
+	jmp eval
+body:	
+	invoke PressSparks
+; if time < count: notDraw
+	mov eax, iterator
+	mov ebx, (Arrow PTR [StepChart + eax]).count	
+	sub ebx, time
+	test ebx, ebx
+	jns endloop  ;;; not the time to show up yet
+	mov eax, 7
+	imul ebx
+	mov ebx, eax
+	; ebx = 7*(count-time)
+	mov eax, iterator
 	mov ecx, (Arrow PTR [StepChart + eax]).x
+	mov edx, (Arrow PTR [StepChart + eax]).y
+	add edx, ebx
+	; edx = start_y + 3*(count-time)
+	cmp edx, 50
+	jl notDraw
 	
 	mov esi, (Arrow PTR [StepChart + eax]).bm
-	;;; curr_y = start_y - (time - count)*10
-	mov eax, time
-	sub eax, (Arrow PTR [StepChart + eax]).count
-	; mov ebx, 2
-	; imul ebx
-	mov edx, (Arrow PTR [StepChart + eax]).y
-	sub edx, eax
-	test edx, edx
-	js notDraw
 	invoke BasicBlit, esi, ecx, edx
-	; inc currIdx
+	cmp edx, 80
+	jnl notCheckCaught
+	mov eax, iterator
+	; mov esi, (Arrow PTR [StepChart + eax]).caught
+	invoke Passthrough, eax
+	
+	; mov esi, iterator
+	; mov (Arrow PTR [StepChart + esi]).caught, eax
+	jmp notCheckCaught
 notDraw:
-	inc time
+	
+	cmp edx, 44
+	
+	jl notCheckCaught
+	mov eax, iterator
+	mov nextIdx, eax
+	xor esi, esi
 
+	cmp esi, (Arrow PTR [StepChart + eax]).caught
+	jne notCheckCaught
+	invoke BasicBlit, offset Boo, 400, 400
+	add score, 10 ;; punishment because of missed arrow. score += 2 if caught == 0
+notCheckCaught:
+	add iterator, TYPE StepChart
+eval:
+	mov eax, offset StepChartEnd
+	sub eax, offset StepChart
+	cmp iterator, eax
+	jl body
+endloop:	
+	inc time
+	jmp EXIT
+DEAD:
+	invoke deadState
+	jmp EXIT
+FINISHED:
+	invoke finishState
+EXIT:	
 	ret         ;; Do not delete this line!!!
 
 GamePlay ENDP
 
 
-DrawBackground PROC
-	invoke DrawStr, offset TitleString, 330, 40, 0ffh
-	invoke DrawStr, offset ScoreFormatStr, 400, 20, 0ffh
-	; invoke DrawStarField
-	invoke RotateBlit, offset DownArrowBlank, 50, 60, PI_HALF		;left
-	invoke BasicBlit, offset DownArrowBlank, 120, 60				;down 
-	invoke RotateBlit, offset DownArrowBlank, 190, 60, PI_HALF*2 	;up
-	invoke RotateBlit, offset DownArrowBlank, 260, 60, PI_HALF*3 	;right
-DrawBackground ENDP
+pausedState PROC 
+	 
+	invoke DrawStr, offset PauseString, 330, 80, 0ffh
+	; invoke BasicBlit, offset Good, 400, 400
+	; invoke PlaySound,NULL,NULL,SND_ASYNC
+	cmp KeyPress, VK_RETURN
+	je EndPause
+	mov PauseFlag, 0
+EndPause:
+	ret
+pausedState ENDP
 
+deadState PROC 
+	invoke DrawStr, offset DeadString, 330, 80, 0ffh
+	ret
+deadState ENDP
 
-Update PROC USES eax ebx ecx edx esi edi
+finishState PROC
+
+	mov eax, 700
+	sub eax, 541
+	shl eax, 2
+	push eax
+	push offset FinishString
+	push offset outStr
+	call wsprintf
+	add esp,12 
+	invoke DrawStr,offset outStr,330,80,255
+	ret
+finishState ENDP
+
+ 
+Passthrough PROC USES eax ebx edx pos: DWORD
+	mov eax, pos
+	mov ebx,(Arrow PTR [StepChart + eax]).caught
+	cmp ebx, 1
+	je exit
+	mov edx, (Arrow PTR [StepChart + eax]).x
+	cmp edx, 50
+	jg L1
+	cmp KeyPress, VK_LEFT
+	jne result
+	jmp addScore
+L1:
+
+	cmp edx, 120
+	jg L2 
+	cmp KeyPress, VK_DOWN
+	jne result
+	jmp addScore
+L2:
+	cmp edx, 190
+	jg L3 
+	cmp KeyPress, VK_RIGHT
+	jne result
+	jmp addScore
+L3:
+	cmp edx, 260
+	jg result
+	cmp KeyPress, VK_RIGHT 
+	jne result
+
+addScore:
+
+	mov (Arrow PTR [StepChart + eax]).caught, 1
+	sub score, 4
+	mov ebx, (Arrow PTR [StepChart + eax]).y
+	cmp ebx, 65
+	jnl good 
+	sub score, 2                         			;;;Advanced Feature: multiple score values
+	invoke BasicBlit, offset Marvelous, 400,400
+	jmp result
+good:
+	invoke BasicBlit, offset Good, 400, 400
+	jmp result
+result:
+	; cmp score, 341
+	; jnl exit
+	; mov score, 341
+exit:
 	
-	; mov eax, 0
-	; mov edx, sizeof Arrow
-	; mul edx
-	; inc (Arrow PTR [StepChart + eax]).y
+	ret
+Passthrough ENDP
 
-	; mov ecx, (Arrow PTR [StepChart + eax]).x
-	; mov edx, (Arrow PTR [StepChart + eax]).y
-	; invoke BasicBlit, (Arrow PTR [StepChart + eax]).bm, ecx, edx
-Update ENDP
+PressSparks PROC USES edx
+Switch:
+	mov edx, KeyPress
+	cmp edx, 025h
+	je LeftSpark
+	cmp edx, 027h
+	je RightSpark
+	cmp edx, 026h
+	je UpSpark
+	cmp edx, 028h
+	je DownSpark
+	jmp result
+LeftSpark:
+	invoke RotateBlit, offset DownArrowBlank, 50, 65, PI_HALF
+	jmp result
+DownSpark:
+	invoke BasicBlit, offset DownArrowBlank, 120, 65
+	jmp result
+UpSpark:
+	invoke RotateBlit, offset DownArrowBlank, 190, 65, PI_HALF*2 	;up
+	jmp result
+RightSpark:	
+	invoke RotateBlit, offset DownArrowBlank, 260, 65, PI_HALF*3 
+	jmp result
+result:
 
-; ClearBlock PROC USES centerX:DWORD, centerY:DWORD, width:DWORD, height:DWORD, color:BYTE
-	
-; ClearBlock ENDP
-
-; Memset PROC USES edi, ecx dst:PTR DWORD, size:DWORD, val:DWORD
-; 	cld
-; 	mov edi, dst
-; 	mov eax, val
-; 	mov ecx, size
-; 	rep STOSB
-; 	mov eax, size
-; 	ret
-; Memset ENDP
+	ret
+PressSparks ENDP
 
 
 CheckIntersect PROC USES ebx ecx edx edi esi oneX:DWORD, oneY:DWORD, oneBitmap:PTR EECS205BITMAP, twoX:DWORD, twoY:DWORD, twoBitmap:PTR EECS205BITMAP 
@@ -216,43 +395,7 @@ result:
 	ret
 CheckIntersect ENDP
 
-PressSparks PROC USES edx
 
-Switch:
-	mov edx, KeyPress
-	cmp edx, 025h
-	je LeftSpark
-	cmp edx, 027h
-	je RightSpark
-	cmp edx, 026h
-	je UpSpark
-	cmp edx, 028h
-	je DownSpark
-	jmp result
-LeftSpark:
-	invoke Sleep, 500
-	invoke RotateBlit, offset RightArrowYellow, 50, 60, PI_HALF*2
-	
-	invoke RotateBlit, offset DownArrowBlank, 50, 60, PI_HALF
-	jmp result
-DownSpark:
-	invoke RotateBlit, offset RightArrowYellow, 120, 60, PI_HALF
-	invoke Sleep, 500
-	invoke BasicBlit, offset DownArrowBlank, 120, 60
-	jmp result
-UpSpark:
-	invoke RotateBlit, offset RightArrowYellow, 190, 60, PI_HALF*3
-	invoke Sleep, 500
-	invoke RotateBlit, offset DownArrowBlank, 190, 60, PI_HALF*2
-	jmp result
-RightSpark:
-	invoke RotateBlit, offset RightArrowYellow, 260, 60, 0
-	invoke Sleep, 500
-	invoke RotateBlit, offset DownArrowBlank, 260, 60, PI_HALF*3
-result:
-
-	ret
-PressSparks ENDP
 
 
 

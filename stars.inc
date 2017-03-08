@@ -8,5 +8,5 @@
 
 DrawStar proto stdcall x:DWORD, y:DWORD
 
-DrawStarField proto stdcall
+DrawStarField proto stdcall time:DWORD
 

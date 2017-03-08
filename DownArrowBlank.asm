@@ -1,4 +1,4 @@
-DownArrowBlank EECS205BITMAP <62, 62, 255,, offset DownArrowBlank + sizeof DownArrowBlank>
+DownArrowBlank EECS205BITMAP <62, 62, 0,, offset DownArrowBlank + sizeof DownArrowBlank>
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
 	BYTE 000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h,000h
